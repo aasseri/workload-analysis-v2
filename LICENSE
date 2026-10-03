@@ -1,0 +1,75 @@
+حقوق النشر © 2026 aasseri
+جميع الحقوق محفوظة.
+
+نظام تحليل عبء العمل والاحتياج الوظيفي، بما في ذلك الشيفرة المصدرية والتصميم
+والتعليمات (البرومبت) والتوثيق، مملوك لصاحب الحقوق المذكور أعلاه.
+
+لا يجوز نسخ هذا البرنامج أو أي جزء منه، أو تعديله، أو دمجه في عمل آخر، أو نشره،
+أو توزيعه، أو ترخيصه من الباطن، أو بيعه، أو استخدامه لأغراض تجارية أو مؤسسية،
+دون إذن كتابي مسبق من صاحب الحقوق.
+
+إتاحة الشيفرة للاطلاع على GitHub أو تشغيل النظام عبر الرابط المنشور لا يمنح أي
+ترخيص أو حق في الاستخدام أو النسخ أو إعادة النشر.
+
+يُقدَّم البرنامج «كما هو» دون أي ضمان صريح أو ضمني، ولا يتحمل صاحب الحقوق أي
+مسؤولية عن أي ضرر ينشأ عن استخدامه.
+
+للاستفسار أو طلب الإذن: عبر صفحة المستودع على GitHub.
+
+-------------------------------------------------------------------------------
+
+Copyright © 2026 aasseri
+All rights reserved.
+
+The Workload Analysis and Staffing Needs System, including its source code,
+design, AI instructions (prompts) and documentation, is the property of the
+copyright holder named above.
+
+No part of this software may be copied, modified, merged into another work,
+published, distributed, sublicensed, sold, or used for commercial or
+institutional purposes without the prior written permission of the copyright
+holder.
+
+Making the source code viewable on GitHub, or running the system through its
+published link, does not grant any license or right to use, copy or
+redistribute it.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+-------------------------------------------------------------------------------
+مكونات خارجية | Third-party components
+-------------------------------------------------------------------------------
+
+المكونات التالية ليست مملوكة لصاحب الحقوق، وتخضع لتراخيصها الخاصة:
+The following components are not owned by the copyright holder and remain
+under their own licenses:
+
+1) ExcelJS 4.4.0 — lib/exceljs.min.js
+   https://github.com/exceljs/exceljs
+   MIT License — Copyright (c) 2014-2019 Guyon Roche
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+2) Tajawal font — fonts/
+   SIL Open Font License 1.1 — full text in fonts/LICENSE.txt
+
+3) Anthropic TypeScript SDK — loaded at runtime from cdn.jsdelivr.net
+   (not included in this repository), MIT License — Copyright 2023 Anthropic, PBC.

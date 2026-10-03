@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>اختبارات النظام</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <style>
+    body { font-family: "Tajawal", "Segoe UI", Tahoma, sans-serif; padding: 20px; background: #f4f6f5; color: #1f2937; }
+    li.ok { color: #1b5e4b; } li.fail { color: #b42318; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <h1>اختبارات النظام</h1>
+  <p id="summary">جاري التشغيل…</p>
+  <ul id="list"></ul>
+
+  <script src="../lib/exceljs.min.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/utilities.js"></script>
+  <script src="../js/data-model.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/calculations.js"></script>
+  <script src="../js/template.js"></script>
+  <script src="../js/excel-export.js"></script>
+  <script src="../js/sample-data.js"></script>
+  <script src="../js/ai-rules.js"></script>
+  <script src="../js/ai-prompt.js"></script>
+  <script src="../js/ai-assistant.js"></script>
+  <script src="../js/task-import.js"></script>
+  <script src="calc.test.js"></script>
+  <script src="ai.test.js"></script>
+  <script src="import.test.js"></script>
+  <script>
+    (async function () {
+      var r = window.__calcResults;
+      function push(name, actual, expected) {
+        r.push({ name: name, ok: actual === expected, actual: actual, expected: expected });
+      }
+      await window.__runAiTests(push);
+      window.__runImportTests(push);
+      var fails = r.filter(function (x) { return !x.ok; });
+      document.getElementById('list').innerHTML = r.map(function (x) {
+        return '<li class="' + (x.ok ? 'ok' : 'fail') + '">' + (x.ok ? '✔ ' : '✘ ') + x.name +
+          (x.ok ? '' : ' — الناتج: ' + x.actual + ' | المتوقع: ' + x.expected) + '</li>';
+      }).join('');
+
+      // توليد ملفات Excel للاختبار في Excel الحقيقي
+      async function save(name, project) {
+        var buf = await WL.excel.exportToBuffer(project, WL.config, WL.template);
+        await fetch('/save?name=' + encodeURIComponent(name), { method: 'POST', body: buf });
+      }
+      var saved = [];
+      if (location.protocol.indexOf('http') === 0) {
+        await save('sample.xlsx', WL.sampleProject());
+        var small = WL.sampleProject();
+        small.tasks = small.tasks.slice(0, 1);
+        small.org.approvedNeed = '';
+        small.org.department = '';
+        await save('single-task.xlsx', small);
+        // مسمى واحد في قسمين + قسم بلا مهام
+        var multi = WL.sampleProject();
+        multi.tasks[1].sectionId = multi.org.sections[0].id;
+        WL.model.addSection(multi, 'وحدة بلا مهام');
+        await save('multi-section.xlsx', multi);
+        saved = ['sample.xlsx', 'single-task.xlsx', 'multi-section.xlsx'];
+      }
+      document.getElementById('summary').textContent =
+        'نجح ' + (r.length - fails.length) + ' من ' + r.length + (saved.length ? ' — ملفات Excel: ' + saved.join('، ') : '');
+      window.__done = { total: r.length, failed: fails.length, saved: saved };
+    })().catch(function (e) {
+      document.getElementById('summary').textContent = 'خطأ: ' + e.message;
+      window.__done = { error: String(e && e.stack || e) };
+    });
+  </script>
+</body>
+</html>

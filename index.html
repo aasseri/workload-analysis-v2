@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تحليل عبء العمل</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="ai-disabled">
+
+<!-- أيقونات -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-logo" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></symbol>
+  <symbol id="i-excel" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v6h6M9 12l6 6M15 12l-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h11l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 3v6h8M7 21v-7h10v7" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-open" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-new" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M12 12v6M9 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21h11.6a2 2 0 0 0 1.7-2.5L14 9V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5M12 18v.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8zM5 2l.6 1.4L7 4l-1.4.6L5 6l-.6-1.4L3 4l1.4-.6z" fill="currentColor"/></symbol>
+  <symbol id="i-paste" viewBox="0 0 24 24"><path d="M9 4h6v3H9zM9 5H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-3M8 11h8M8 15h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="appbar">
+  <div class="brand">
+    <span class="brand-mark"><svg class="ic"><use href="#i-logo"/></svg></span>
+    <div>
+      <h1 id="appTitle">نظام تحليل عبء العمل والاحتياج الوظيفي</h1>
+    </div>
+  </div>
+  <div class="appbar-actions menu-wrap">
+    <button class="btn btn-ghost" type="button" id="menuBtn" aria-haspopup="true" aria-expanded="false" aria-controls="appMenu">
+      <svg class="ic"><use href="#i-menu"/></svg><span>القائمة</span>
+    </button>
+    <div class="app-menu" id="appMenu" role="menu" hidden>
+      <button type="button" role="menuitem" data-action="new-project"><svg class="ic"><use href="#i-new"/></svg><span>مشروع جديد</span></button>
+      <button type="button" role="menuitem" data-action="open-project"><svg class="ic"><use href="#i-open"/></svg><span>فتح مشروع</span></button>
+      <button type="button" role="menuitem" data-action="save-project"><svg class="ic"><use href="#i-save"/></svg><span>حفظ المشروع</span></button>
+      <button type="button" role="menuitem" data-action="load-sample"><svg class="ic"><use href="#i-flask"/></svg><span>بيانات تجريبية</span></button>
+      <div class="menu-sep" role="separator"></div>
+      <button type="button" role="menuitemcheckbox" class="menu-switch" id="aiModeToggle" data-action="toggle-ai-mode" aria-checked="false">
+        <svg class="ic"><use href="#i-spark"/></svg><span>وضع الذكاء الاصطناعي</span>
+        <span class="switch" aria-hidden="true"><i></i></span>
+      </button>
+    </div>
+    <input type="file" id="projectFile" accept=".json,application/json" hidden>
+  </div>
+</header>
+
+<nav class="stepper" aria-label="مراحل الإدخال">
+  <button type="button" class="step" data-step="0"><span class="step-num">1</span><span class="step-label">البيانات الأساسية</span></button>
+  <span class="step-line"></span>
+  <button type="button" class="step" data-step="1"><span class="step-num">2</span><span class="step-label">المهام</span></button>
+  <span class="step-line"></span>
+  <button type="button" class="step" data-step="2"><span class="step-num">3</span><span class="step-label">المراجعة والتصدير</span></button>
+</nav>
+
+<main class="container">
+
+  <!-- ───── الخطوة 1: البيانات الأساسية ───── -->
+  <section class="panel" id="step-0" data-panel="0">
+    <div class="panel-head">
+      <h2>البيانات الأساسية</h2>
+      <p>الحقول المعلّمة بـ <span class="req">*</span> مطلوبة للتصدير.</p>
+    </div>
+
+    <div class="card-grid">
+      <fieldset class="card">
+        <legend>بيانات الجهة</legend>
+        <div class="field"><label for="f-entity">اسم الجهة <span class="req">*</span></label>
+          <input id="f-entity" data-org="entity" type="text" autocomplete="off"><small class="err"></small></div>
+        <div class="field"><label for="f-department">الإدارة</label>
+          <input id="f-department" data-org="department" type="text" autocomplete="off"><small class="err"></small></div>
+        <div class="field sections-field"><label for="f-newSection">الأقسام / الوحدات <span class="req">*</span></label>
+          <div class="section-add">
+            <input id="f-newSection" type="text" autocomplete="off" placeholder="اكتب اسم القسم أو الوحدة ثم اضغط ＋">
+            <button type="button" class="btn btn-primary section-add-btn" data-action="add-section" title="إضافة القسم" aria-label="إضافة القسم"><svg class="ic"><use href="#i-plus"/></svg></button>
+          </div>
+          <small class="hint">يمكن إضافة أكثر من قسم أو وحدة، وتظهر في صفحة المهام كقائمة منسدلة.</small>
+          <ul class="section-list" id="sectionList"></ul>
+          <small class="err" id="sectionsErr"></small></div>
+        <!-- المسمى الوظيفي: مخفي حاليًا (يبقى في بيانات المشروع؛ لإظهاره احذف السمة hidden) -->
+        <div class="field" hidden><label for="f-jobTitle">المسمى الوظيفي <span class="opt">(اختياري)</span></label>
+          <input id="f-jobTitle" data-org="jobTitle" type="text" autocomplete="off">
+          <small class="hint">يستخدمه المساعد الذكي لتقييم ارتباط المهام بالوظيفة، ولا يظهر في ملف Excel.</small><small class="err"></small></div>
+      </fieldset>
+
+      <fieldset class="card">
+        <legend>القوى العاملة</legend>
+        <div class="field"><label for="f-actualCount">العدد الفعلي <span class="req">*</span></label>
+          <input id="f-actualCount" data-org="actualCount" type="text" inputmode="numeric" class="num" autocomplete="off">
+          <small class="err"></small></div>
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- ───── الخطوة 2: المهام ───── -->
+  <section class="panel" id="step-1" data-panel="1" hidden>
+    <div class="panel-head row">
+      <div>
+        <h2>المهام</h2>
+        <p>اختر التردد من القائمة، وتُحسب الساعات تلقائيًا. اسحب المهمة من المقبض لإعادة ترتيبها.</p>
+      </div>
+      <div class="head-actions">
+        <button class="btn btn-ai" type="button" data-action="ai-open"><svg class="ic"><use href="#i-spark"/></svg><span>المساعد الذكي</span></button>
+        <button class="btn btn-outline" type="button" data-action="paste-tasks"><svg class="ic"><use href="#i-paste"/></svg><span>لصق مهام</span></button>
+        <button class="btn btn-primary" type="button" data-action="add-task"><svg class="ic"><use href="#i-plus"/></svg><span>إضافة مهمة</span></button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="tasks" id="tasksTable">
+        <thead>
+          <tr>
+            <th class="c-order"><span class="sr">ترتيب</span></th>
+            <th class="c-no">م</th>
+            <th class="c-title">المهمة</th>
+            <th class="c-sec">القسم / الوحدة</th>
+            <th class="c-pos">المسمى الفعلي</th>
+            <th class="c-freq">التردد</th>
+            <th class="c-num">التكرار</th>
+            <th class="c-num">المدة بالدقائق</th>
+            <th class="c-num">إجمالي الساعات</th>
+            <th class="c-share">نسبة الساعات</th>
+            <th class="c-act"><span class="sr">إجراءات</span></th>
+          </tr>
+        </thead>
+        <tbody id="taskBody"></tbody>
+      </table>
+      <div class="empty" id="tasksEmpty" hidden>
+        <p>لا توجد مهام بعد.</p>
+        <div class="empty-actions">
+          <button class="btn btn-primary" type="button" data-action="add-task"><svg class="ic"><use href="#i-plus"/></svg><span>إضافة أول مهمة</span></button>
+          <button class="btn btn-outline" type="button" data-action="paste-tasks"><svg class="ic"><use href="#i-paste"/></svg><span>لصق مهام من Excel أو Word</span></button>
+        </div>
+      </div>
+    </div>
+    <p class="form-msg" id="tasksMsg"></p>
+    <datalist id="positionList"></datalist>
+  </section>
+
+  <!-- ───── الخطوة 3: المراجعة ───── -->
+  <section class="panel" id="step-2" data-panel="2" hidden>
+    <div class="panel-head">
+      <h2>المراجعة قبل التصدير</h2>
+      <p id="reviewSubtitle"></p>
+    </div>
+
+    <div class="alert" id="errorPanel" hidden>
+      <div class="alert-head"><svg class="ic"><use href="#i-alert"/></svg><strong>لا يمكن التصدير قبل تصحيح الملاحظات التالية:</strong></div>
+      <ul id="errorList"></ul>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="card card-full">
+      <h3>الاحتياج حسب القسم / الوحدة والمسمى الفعلي</h3>
+      <table class="mini" id="posTable"></table>
+      <p class="pos-note" id="posNote" hidden></p>
+    </div>
+
+    <div class="card card-full">
+      <h3>توزيع الساعات حسب التردد</h3>
+      <table class="mini" id="freqTable"></table>
+    </div>
+
+    <div class="review-actions">
+      <button class="btn btn-outline" type="button" data-action="goto-step" data-target="0"><svg class="ic"><use href="#i-edit"/></svg><span>تعديل البيانات</span></button>
+      <button class="btn btn-primary btn-lg" type="button" id="exportBtn" data-action="export"><svg class="ic"><use href="#i-excel"/></svg><span>تصدير Excel</span></button>
+    </div>
+  </section>
+</main>
+
+<!-- شريط الملخص والتنقل -->
+<footer class="bottombar">
+  <div class="nav-btns">
+    <button class="btn btn-outline" type="button" id="prevBtn" data-action="prev"><svg class="ic"><use href="#i-prev"/></svg><span>السابق</span></button>
+    <button class="btn btn-primary" type="button" id="nextBtn" data-action="next"><span>التالي</span><svg class="ic"><use href="#i-next"/></svg></button>
+  </div>
+</footer>
+
+<dialog id="pasteDialog" class="dialog dialog-wide" aria-labelledby="pasteTitle">
+  <div class="pd-head">
+    <h3 id="pasteTitle">لصق مهام من Excel أو Word</h3>
+    <button type="button" class="icon-btn" data-paste="cancel" aria-label="إغلاق"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+  <p class="pd-help">انسخ المهام من Excel (عمود أو جدول) أو من Word (قائمة أو أسطر) والصقها هنا. كل سطر يصبح مهمة، ويُحذف الترقيم والرموز من بدايته.</p>
+  <textarea id="pasteInput" rows="6" placeholder="الصق المهام هنا (Ctrl + V)" aria-label="النص الملصوق"></textarea>
+  <div class="pd-mapping" id="pasteMapping" hidden></div>
+  <p class="pd-empty" id="pasteEmpty" hidden>لم يُعثر على مهام في النص الملصوق.</p>
+  <div id="pastePreviewBox" hidden>
+    <div class="pd-preview-head">
+      <strong id="pasteCount"></strong>
+      <span class="pd-links"><button type="button" class="link-btn" data-paste="all">تحديد الكل</button> · <button type="button" class="link-btn" data-paste="none">إلغاء التحديد</button></span>
+    </div>
+    <ol class="pd-list" id="pastePreview"></ol>
+  </div>
+  <fieldset class="pd-mode" id="pasteModeBox">
+    <label><input type="radio" name="pasteMode" value="append" checked> إضافة إلى المهام الحالية</label>
+    <label><input type="radio" name="pasteMode" value="replace"> استبدال كل المهام الحالية</label>
+  </fieldset>
+  <div class="dialog-actions">
+    <button type="button" class="btn btn-primary" id="pasteAdd" data-paste="add" disabled>إضافة</button>
+    <button type="button" class="btn btn-outline" data-paste="cancel">إلغاء</button>
+  </div>
+</dialog>
+
+<dialog id="confirmDialog" class="dialog">
+  <h3 id="confirmTitle"></h3>
+  <p id="confirmText"></p>
+  <div class="dialog-actions">
+    <button type="button" class="btn btn-outline" data-confirm="cancel">إلغاء</button>
+    <button type="button" class="btn btn-danger" data-confirm="ok" id="confirmOk">تأكيد</button>
+  </div>
+</dialog>
+
+<!-- المساعد الذكي -->
+<div class="ai-backdrop" id="aiBackdrop" hidden></div>
+<aside class="ai-drawer" id="aiDrawer" hidden tabindex="-1" aria-label="المساعد الذكي">
+  <div class="ai-head">
+    <span class="ai-mark"><svg class="ic"><use href="#i-spark"/></svg></span>
+    <div class="ai-head-text">
+      <h3>المساعد الذكي</h3>
+      <p id="aiScope"></p>
+    </div>
+    <button type="button" class="icon-btn" data-ai="close" title="إغلاق" aria-label="إغلاق"><svg class="ic"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="ai-engine" id="aiEngine"></div>
+  <form class="ai-key" id="aiKeyForm" hidden autocomplete="off">
+    <label for="aiProvider">مزوّد الخدمة</label>
+    <select id="aiProvider"></select>
+    <label for="aiKeyInput">المفتاح (API Key)</label>
+    <input id="aiKeyInput" type="password" dir="ltr" autocomplete="off" spellcheck="false">
+    <a class="ai-keys-link" id="aiKeysLink" target="_blank" rel="noopener noreferrer" hidden></a>
+    <div id="aiBaseUrlField" hidden>
+      <label for="aiBaseUrlInput">عنوان الخدمة (Base URL)</label>
+      <input id="aiBaseUrlInput" type="url" dir="ltr" placeholder="https://.../v1" autocomplete="off" spellcheck="false">
+    </div>
+    <label for="aiModelInput">النموذج</label>
+    <input id="aiModelInput" type="text" dir="ltr" autocomplete="off" spellcheck="false">
+    <small class="hint" id="aiModelHint"></small>
+    <small class="err" id="aiKeyError"></small>
+    <p class="ai-privacy" id="aiPrivacy"></p>
+    <div class="sug-actions">
+      <button type="submit" class="btn btn-primary btn-sm">حفظ وتفعيل</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-ai="remove-key" id="aiKeyRemove" hidden>حذف الإعدادات</button>
+    </div>
+  </form>
+  <div class="ai-actions">
+    <label for="aiTaskSelect" class="ai-label">المهمة المختارة</label>
+    <select id="aiTaskSelect"></select>
+    <div class="ai-mode-grid">
+      <button type="button" class="ai-mode" data-mode="improve">✨ تحسين المهمة</button>
+      <button type="button" class="ai-mode" data-mode="analyze">🔍 تحليل المهمة</button>
+      <button type="button" class="ai-mode" data-mode="measure">📏 جعلها قابلة للقياس</button>
+      <button type="button" class="ai-mode" data-mode="recommend">💡 اقتراح تحسين</button>
+      <button type="button" class="ai-mode" data-mode="overlap">🔄 فحص التداخل</button>
+    </div>
+    <button type="button" class="btn btn-ai ai-review" data-mode="review">🧠 مراجعة جميع المهام</button>
+  </div>
+  <div class="ai-body" id="aiBody"></div>
+</aside>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="lib/exceljs.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utilities.js"></script>
+<script src="js/data-model.js"></script>
+<script src="js/validation.js"></script>
+<script src="js/calculations.js"></script>
+<script src="js/template.js"></script>
+<script src="js/excel-export.js"></script>
+<script src="js/ai-rules.js"></script>
+<script src="js/ai-prompt.js"></script>
+<script src="js/ai-assistant.js"></script>
+<script src="js/sample-data.js"></script>
+<script src="js/task-import.js"></script>
+<script src="js/app.js"></script>
+<script src="js/ai-panel.js"></script>
+<script src="js/paste-dialog.js"></script>
+</body>
+</html>
